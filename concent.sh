@@ -1,25 +1,31 @@
 #!/bin/bash
 function consent {
 #пока значение i=0, цикл продолжает выполняться
-i=0    
+i=0
     #цикл создан для проверки корректности ввода с клавиатуры
 while [ $i -eq 0 ]
 do
     read keyb
-        #проверка правильности введения с клавиатуры стиля
-        if [ $keyb = 00 ] || [ $keyb = 01 ] || [ $keyb = 04 ] || [ $keyb = 05 ] || [ $keyb = 07 ]
-        then
-            answer=$keyb
-            i=1
-        #проверка правильности введения с клавиатуры цвета
-        else 
-            if [ $keyb = "30" ] || [ $keyb = "31" ] || [ $keyb = "32" ] || [ $keyb = "33" ] || [ $keyb = "34" ] || [ $keyb = "35" ] || [ $keyb = "36" ] || [ $keyb = "37" ] || [ $keyb = "39" ]
-            then 
-                answer=$keyb
-                i=1
-            else
-                echo "Введите корректное значение:"
-            fi
-        fi
+        #проверка правильности введения с клавиатуры стиля и цвета
+	case $keyb in
+		02|03|06  )  echo "Введите корректное значение:";;
+		$style    ) answer1=$keyb; i=1;;
+		*         )  echo "Введите корректное значение:";;
+	esac
+done
+i=0
+while [ $i -eq 0 ]
+do
+    read keyb
+	case $keyb in
+		$color    ) answer2=$keyb; i=1;;
+		*         )  echo "Введите корректное значение:";;
+	esac
 done
 }
+style='[0][0-7]'
+color='[3][0-7]'
+echo $style
+consent
+echo $answer1
+echo $answer2
