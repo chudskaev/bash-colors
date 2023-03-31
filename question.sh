@@ -1,33 +1,50 @@
 #!/bin/bash
 function concent {
 #пока значение i=0, цикл продолжает выполняться
-i=0
+k=0
     #цикл создан для проверки корректности ввода с клавиатуры
-while [ $i -eq 0 ]
-do
-    read keyb
+while [ $k -eq 0 ]
+	do
+		i=0
+		echo 'Скажи Да! Не говори Нет!'
+		while [ $i -eq 0 ]
+			do
+				echo
+				read keyb
+				sleep 1
         #проверка правильности введения с клавиатуры стиля и цвета
-	case $keyb in
-		$style    ) answer1=$keyb,' Молодец!!!'; i=1;;
-		$color    ) answer2='| Пидора ответ!!! |'; i=1;;
-		*         )  echo "Введите корректное значение (Да/Нет):";;
-	esac
-done
-#i=0
-#while [ $i -eq 0 ]
-#do
-#    read keyb
-#	case $keyb in
-#		$color    ) answer2=$keyb; i=1;;
-#		*         )  echo "Введите корректное значение:";;
-#	esac
-#done
+				case $keyb in
+				$style    ) answer1=$keyb,' Молодец!!!'; printf "\033[1;37;42m$answer1\033[0m\n"; i=1;;
+				$color    ) answer2=$keyb,'? Пидора ответ!!!'; printf "\033[1;97m\033[5;41m$answer2\033[0m\n\a"; i=1;;
+				*         )  echo "Введите корректное значение (Да/Нет):";;
+				esac
+				echo
+				sleep 1
+			done
+		j=0
+		echo 'Продлжим общение? (Да/Нет)'
+		while [ $j -eq 0 ]
+			do
+				echo
+				read keyb
+				sleep 1
+				case $keyb in
+				$style    ) answer1=$keyb,' Отлично!!!'; printf "\033[1;37;42m$answer1\033[0m\n"; j=1;;
+				$color    ) answer2=$keyb'? Пидора ответ!!!'; printf "\033[1;97m\033[5;41m$answer2\033[0m\n\a"; j=1; k=1;;
+				*         )  echo "Введите корректное значение (Да/Нет):";;
+				esac
+				echo
+				sleep 1
+			done
+	done
 }
-#style='[0][0-7]'
-#color='[3][0-7]'
+export APP_PID=$a
 style='Да'
 color='Нет' 
-echo 'Скажи Да!'
+echo 'Добро пожаловать в ChatGPT!!!'
+echo '_____________________________'
+echo
 concent
-printf "\033[1;37;42m$answer1\033[0m\n"
-printf "\033[1;97m\033[5;41m$answer2\033[0m\n\a" 
+sleep 3
+a=`pidof /usr/bin/fly-term`
+kill $a
